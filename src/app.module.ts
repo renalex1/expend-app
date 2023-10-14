@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-// import { Module } from '@nestjs/common';
-import { GraphQLModule } from '@nestjs/graphql';
-import { join } from 'path';
-import { CoffeeModule } from './coffee/coffee.module';
+import { CoffeesModule } from './coffees/coffees.module';
+import { CoffeesService } from './coffees/coffees.service';
 
 @Module({
   imports: [
@@ -17,9 +17,9 @@ import { CoffeeModule } from './coffee/coffee.module';
         numberScalarMode: 'integer',
       },
     }),
-    CoffeeModule,
+    CoffeesModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, CoffeesService],
 })
 export class AppModule {}
