@@ -8,6 +8,7 @@ import { CoffeesModule } from './coffees/coffees.module';
 import { CoffeesService } from './coffees/coffees.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Coffee } from './coffees/entities/coffee.entity';
+import { Flavor } from './coffees/entities/flavor.entity';
 
 @Module({
   imports: [
@@ -21,7 +22,7 @@ import { Coffee } from './coffees/entities/coffee.entity';
       autoLoadEntities: true,
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([Coffee]),
+    TypeOrmModule.forFeature([Coffee, Flavor]),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       // autoSchemaFile: true,
