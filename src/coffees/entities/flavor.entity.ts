@@ -14,6 +14,6 @@ export class Flavor {
   name: string;
 
   @ManyToMany(() => Coffee, (coffee) => coffee.flavors)
-  @Field(() => [Coffee])
-  coffees: Coffee[];
+  // @Field(() => [Coffee])
+  coffees?: Coffee[];
 }

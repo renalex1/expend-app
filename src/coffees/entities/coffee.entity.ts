@@ -17,8 +17,8 @@ export class Coffee {
   @Field()
   brand: string;
 
-  @ManyToMany(() => Flavor, (flavor) => flavor.coffees, { cascade: true })
   @JoinTable()
-  @Field(() => [Flavor])
-  flavors?: Flavor[];
+  @ManyToMany(() => Flavor, (flavor) => flavor.coffees, { cascade: true })
+  // @Field(() => [Flavor])
+  flavors: Flavor[];
 }

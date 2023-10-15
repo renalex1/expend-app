@@ -5,7 +5,6 @@
 type Flavor {
   id: ID!
   name: String!
-  coffees: [Coffee!]!
 }
 
 """Coffee Model"""
