@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Coffee } from './entities/coffee.entity';
 import { Repository } from 'typeorm';
 import { UserInputError } from 'apollo-server-express';
+import { UpdateCoffeeInput } from './dto/update-coffee.input';
 // import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql';
 // import { ParseIntPipe } from '@nestjs/common';
 // import { Coffee } from './entities/coffee.entity';
@@ -31,5 +32,23 @@ export class CoffeesService {
   async create(createCoffeeInput: CreateCoffeeInput) {
     const coffee = this.coffeesRepository.create(createCoffeeInput);
     return this.coffeesRepository.save(coffee);
+  }
+
+  async update(id: number, updateCoffeeInput: UpdateCoffeeInput) {
+    const coffee = await this.coffeesRepository.preload({
+      id,
+      ...updateCoffeeInput,
+    });
+
+    if (!coffee) {
+      throw new UserInputError(`Coffee #${id} does not exist!`);
+    }
+
+    return this.coffeesRepository.save(coffee);
+  }
+
+  async remove(id: number) {
+    const coffee = await this.findOne(id);
+    return this.coffeesRepository.remove(coffee);
   }
 }
