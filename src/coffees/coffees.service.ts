@@ -15,6 +15,7 @@ export class CoffeesService {
     @InjectRepository(Flavor)
     private readonly flavorRepository: Repository<Flavor>,
   ) {}
+
   async findAll() {
     return this.coffeesRepository.find();
   }

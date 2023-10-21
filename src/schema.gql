@@ -22,8 +22,20 @@ type Coffee implements Drink {
   flavors: [Flavor!]!
 }
 
+type TeaFlavor {
+  id: ID!
+  name: String!
+}
+
+"""Tea Model"""
 type Tea implements Drink {
   name: String!
+
+  """A unique identifier"""
+  id: ID!
+  brand: String!
+  createdAt: Data!
+  flavors: [TeaFlavor!]!
 }
 
 """Date custom scale type"""
@@ -33,12 +45,17 @@ type Query {
   drinks: [Drink!]!
   coffees: [Coffee!]!
   coffee(id: ID!): Coffee!
+  teas: [Tea!]!
+  tea(id: ID!): Tea!
 }
 
 type Mutation {
   createCoffee(createCoffeeInput: CreateCoffeeInput!): Coffee!
   updateCoffee(id: Int!, updateCoffeeInput: UpdateCoffeeInput!): Coffee!
   removeCoffee(id: Int!): Coffee!
+  createTea(createTeaInput: CreateTeaInput!): Tea!
+  updateTea(id: Int!, updateTeaInput: UpdateTeaInput!): Tea!
+  removeTea(id: Int!): Tea!
 }
 
 input CreateCoffeeInput {
@@ -60,5 +77,27 @@ input UpdateCoffeeInput {
   brand: String
 
   """A new coffee flavors []"""
+  flavors: [String!]
+}
+
+input CreateTeaInput {
+  """A new tea name"""
+  name: String!
+
+  """A new tea brand name"""
+  brand: String!
+
+  """A new tea flavors []"""
+  flavors: [String!]!
+}
+
+input UpdateTeaInput {
+  """A new tea name"""
+  name: String
+
+  """A new tea brand name"""
+  brand: String
+
+  """A new tea flavors []"""
   flavors: [String!]
 }

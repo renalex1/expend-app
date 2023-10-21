@@ -12,6 +12,9 @@ import { Flavor } from './coffees/entities/flavor.entity';
 import { DateScalar } from './common/scalars/date.scalar';
 import { Tea } from './teas/entities/tea.entity';
 import { DrinksResolver } from './drinks/drinks.resolver';
+import { TeasModule } from './teas/teas.module';
+import { TeasService } from './teas/teas.service';
+import { TeaFlavor } from './teas/entities/flavor.entity';
 
 @Module({
   imports: [
@@ -25,7 +28,7 @@ import { DrinksResolver } from './drinks/drinks.resolver';
       autoLoadEntities: true,
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([Coffee, Flavor]),
+    TypeOrmModule.forFeature([Coffee, Flavor, Tea, TeaFlavor]),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       // autoSchemaFile: true,
@@ -37,8 +40,9 @@ import { DrinksResolver } from './drinks/drinks.resolver';
       },
     }),
     CoffeesModule,
+    TeasModule,
   ],
   controllers: [AppController],
-  providers: [AppService, CoffeesService, DateScalar, DrinksResolver],
+  providers: [AppService, CoffeesService, DateScalar, DrinksResolver, TeasService],
 })
 export class AppModule {}
