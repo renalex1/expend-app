@@ -13,8 +13,12 @@ type Coffee {
   id: ID!
   name: String!
   brand: String!
+  createdAt: Data!
   flavors: [Flavor!]!
 }
+
+"""Date custom scale type"""
+scalar Data
 
 type Query {
   coffees: [Coffee!]!
