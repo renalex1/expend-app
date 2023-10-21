@@ -10,6 +10,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Coffee } from './coffees/entities/coffee.entity';
 import { Flavor } from './coffees/entities/flavor.entity';
 import { DateScalar } from './common/scalars/date.scalar';
+import { Tea } from './teas/entities/tea.entity';
+import { DrinksResolver } from './drinks/drinks.resolver';
 
 @Module({
   imports: [
@@ -31,11 +33,12 @@ import { DateScalar } from './common/scalars/date.scalar';
       buildSchemaOptions: {
         numberScalarMode: 'integer',
         // dateScalarMode: 'timestamp',
+        orphanedTypes: [Tea],
       },
     }),
     CoffeesModule,
   ],
   controllers: [AppController],
-  providers: [AppService, CoffeesService, DateScalar],
+  providers: [AppService, CoffeesService, DateScalar, DrinksResolver],
 })
 export class AppModule {}
