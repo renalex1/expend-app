@@ -2,10 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-interface Drink {
-  name: String!
-}
-
 type Flavor {
   id: ID!
   name: String!
@@ -22,6 +18,10 @@ type Coffee implements Drink {
   flavors: [Flavor!]!
 }
 
+interface Drink {
+  name: String!
+}
+
 type TeaFlavor {
   id: ID!
   name: String!
@@ -34,7 +34,7 @@ type Tea implements Drink {
   """A unique identifier"""
   id: ID!
   brand: String!
-  createdAt: Data!
+  createdAt: Data! 
   flavors: [TeaFlavor!]!
 }
 
@@ -42,12 +42,14 @@ type Tea implements Drink {
 scalar Data
 
 type Query {
-  drinks: [Drink!]!
+  drinks: [DrinkResult!]!
   coffees: [Coffee!]!
   coffee(id: ID!): Coffee!
   teas: [Tea!]!
   tea(id: ID!): Tea!
 }
+
+union DrinkResult = Coffee | Tea
 
 type Mutation {
   createCoffee(createCoffeeInput: CreateCoffeeInput!): Coffee!
