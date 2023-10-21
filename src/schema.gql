@@ -115,3 +115,7 @@ input UpdateTeaInput {
   """A new tea flavors []"""
   flavors: [String!]
 }
+
+type Subscription {
+  coffeeAdded: Coffee!
+}

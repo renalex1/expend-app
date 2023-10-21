@@ -15,6 +15,7 @@ import { DrinksResolver } from './drinks/drinks.resolver';
 import { TeasModule } from './teas/teas.module';
 import { TeasService } from './teas/teas.service';
 import { TeaFlavor } from './teas/entities/flavor.entity';
+import { PubSubModule } from './pub-sub/pub-sub.module';
 
 @Module({
   imports: [
@@ -38,9 +39,11 @@ import { TeaFlavor } from './teas/entities/flavor.entity';
         // dateScalarMode: 'timestamp',
         orphanedTypes: [Tea],
       },
+      installSubscriptionHandlers: true,
     }),
     CoffeesModule,
     TeasModule,
+    PubSubModule,
   ],
   controllers: [AppController],
   providers: [AppService, CoffeesService, DateScalar, DrinksResolver, TeasService],

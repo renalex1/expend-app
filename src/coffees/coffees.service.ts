@@ -6,6 +6,7 @@ import { Repository } from 'typeorm';
 import { UserInputError } from 'apollo-server-express';
 import { UpdateCoffeeInput } from './dto/update-coffee.input';
 import { Flavor } from './entities/flavor.entity';
+import { PubSub } from 'graphql-subscriptions';
 
 @Injectable()
 export class CoffeesService {
@@ -14,6 +15,7 @@ export class CoffeesService {
     private readonly coffeesRepository: Repository<Coffee>,
     @InjectRepository(Flavor)
     private readonly flavorRepository: Repository<Flavor>,
+    private readonly pubSub: PubSub,
   ) {}
 
   async findAll() {
@@ -35,7 +37,13 @@ export class CoffeesService {
       createCoffeeInput.flavors.map((name) => this.preloadFavorByName(name)),
     );
     const coffee = this.coffeesRepository.create({ ...createCoffeeInput, flavors });
-    return this.coffeesRepository.save(coffee);
+
+    // return this.coffeesRepository.save(coffee);
+    const newCoffeeEntity = await this.coffeesRepository.save(coffee);
+
+    this.pubSub.publish('coffeeAdded', { coffeeAdded: newCoffeeEntity });
+
+    return newCoffeeEntity;
   }
 
   async update(id: number, updateCoffeeInput: UpdateCoffeeInput) {
