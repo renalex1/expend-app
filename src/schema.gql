@@ -15,11 +15,17 @@ type Coffee implements Drink {
   id: ID!
   brand: String!
   createdAt: Data!
+  type: CoffeeType!
   flavors: [Flavor!]!
 }
 
 interface Drink {
   name: String!
+}
+
+enum CoffeeType {
+  ARABICA
+  ROBUSTA
 }
 
 type TeaFlavor {
@@ -34,7 +40,7 @@ type Tea implements Drink {
   """A unique identifier"""
   id: ID!
   brand: String!
-  createdAt: Data! 
+  createdAt: Data!
   flavors: [TeaFlavor!]!
 }
 
@@ -69,6 +75,9 @@ input CreateCoffeeInput {
 
   """A new coffee flavors []"""
   flavors: [String!]!
+
+  """The type of the coffee"""
+  type: CoffeeType!
 }
 
 input UpdateCoffeeInput {
@@ -80,6 +89,9 @@ input UpdateCoffeeInput {
 
   """A new coffee flavors []"""
   flavors: [String!]
+
+  """The type of the coffee"""
+  type: CoffeeType
 }
 
 input CreateTeaInput {
