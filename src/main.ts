@@ -2,6 +2,8 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { ClusterService } from './cluster.service';
 import * as fs from 'fs';
 import * as https from 'https';
 
@@ -12,6 +14,15 @@ async function bootstrap() {
   const HOST = process.env.HOST || 'localhost';
 
   const app = await NestFactory.create(AppModule);
+
+  const config = new DocumentBuilder()
+    .setTitle('Demo project on Nest.js')
+    .setDescription('GraphQl API Documentation')
+    .setVersion('1.0.0')
+    .addTag('RenAlex')
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('/api/docs', app, document);
 
   app.useGlobalPipes(new ValidationPipe());
 
@@ -36,4 +47,9 @@ async function bootstrap() {
   console.log(`
   🚀  GraphQL API server, launched at ${protocol}://${HOST}:${PORT}/graphql`);
 }
-bootstrap();
+
+if (process.env.MULTI_ENV === 'cluster') {
+  ClusterService.clusterize(bootstrap);
+} else {
+  bootstrap();
+}
