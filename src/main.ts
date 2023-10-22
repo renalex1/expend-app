@@ -19,8 +19,8 @@ async function bootstrap() {
 
   if (process.env.NODE_ENV === 'prod') {
     const httpsOptions = {
-      key: fs.readFileSync('path_to_your_private_key.pem'),
-      cert: fs.readFileSync('path_to_your_certificate.pem'),
+      key: fs.readFileSync(process.env.PATH_PRIVATE_KEY || 'path_to_your_private_key.pem'),
+      cert: fs.readFileSync(process.env.PATH_CERTIFICATE || 'path_to_your_certificate.pem'),
     };
 
     const server = https.createServer(httpsOptions, app.getHttpAdapter().getInstance());
