@@ -7,7 +7,7 @@ import * as fs from 'fs';
 import * as https from 'https';
 
 async function bootstrap() {
-  ConfigModule.forRoot({ envFilePath: `${process.env.NODE_ENV}.env` });
+  ConfigModule.forRoot({ envFilePath: `${process.env.NODE_ENV ? process.env.NODE_ENV : ''}.env` });
 
   const PORT = process.env.PORT || 4000;
   const HOST = process.env.HOST || 'localhost';
